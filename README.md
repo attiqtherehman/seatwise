@@ -21,6 +21,7 @@ The original 2019 version is preserved on the [`old-version`](https://github.com
 - **Two views**: Room-wise (the seat grid, for exam halls) and Section-wise (a per-section list for notice boards)
 - **Export** the plan as CSV, or **print** it (print-friendly styles included)
 - **Dead-end handling you choose up front**: leave empty seats between clashing students, or seat them anyway with conflicts highlighted
+- **Dark & light themes** — dark by default, one-click toggle, your choice is remembered (printing always uses light)
 
 ## CSV format
 
@@ -66,6 +67,10 @@ No server needed — just open `index.html`. To develop with live reload, any st
 ```bash
 npx serve .
 ```
+
+## Contact
+
+Questions, bugs, or ideas? [Open an issue](https://github.com/attiqtherehman/seatwise/issues) or reach out on [GitHub](https://github.com/attiqtherehman).
 
 ## License
 

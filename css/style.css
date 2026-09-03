@@ -1,15 +1,49 @@
 /* Seating Arrangement System */
 
+/* Dark theme is the default; [data-theme="light"] switches to light. */
 :root {
-    --green: #1a7f37;
+    color-scheme: dark;
+    --green: #2ea043;
     --green-dark: #116329;
+    --green-strong: #3fb950;
+    --green-tint: rgba(46, 160, 67, 0.15);
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --danger: #f85149;
+    --danger-bg: rgba(248, 81, 73, 0.12);
+    --danger-border: rgba(248, 81, 73, 0.45);
+    --radius: 10px;
+    /* saturation/lightness of the per-section tiles (hue comes from JS via --hue) */
+    --seat-s: 45%;
+    --seat-l: 20%;
+    --seat-border-s: 35%;
+    --seat-border-l: 38%;
+    --seat-text-s: 65%;
+    --seat-text-l: 78%;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+    --green: #1a7f37;
+    --green-strong: #116329;
+    --green-tint: #f0fff4;
     --bg: #f6f8fa;
     --card: #ffffff;
     --border: #d0d7de;
     --text: #1f2328;
     --muted: #59636e;
     --danger: #cf222e;
-    --radius: 10px;
+    --danger-bg: #fff5f5;
+    --danger-border: #ffcdd2;
+    --seat-s: 70%;
+    --seat-l: 92%;
+    --seat-border-s: 45%;
+    --seat-border-l: 65%;
+    --seat-text-s: 60%;
+    --seat-text-l: 28%;
 }
 
 * {
@@ -49,8 +83,24 @@ body {
 .brand {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--green-dark);
+    color: var(--green-strong);
     text-decoration: none;
+}
+
+.theme-toggle {
+    margin-left: auto;
+    align-self: center;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.theme-toggle:hover {
+    background: var(--bg);
 }
 
 .tagline {
@@ -64,6 +114,25 @@ body {
     background: var(--green-dark);
     color: #fff;
     font-size: 0.85rem;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer-links {
+    display: flex;
+    gap: 16px;
+}
+
+.site-footer a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 .lead {
@@ -116,7 +185,7 @@ body {
 
 .dropzone.drag {
     border-color: var(--green);
-    background: #f0fff4;
+    background: var(--green-tint);
 }
 
 .dropzone p {
@@ -146,9 +215,9 @@ body {
 .errors {
     margin-top: 14px;
     padding: 10px 14px;
-    border: 1px solid #ffcdd2;
+    border: 1px solid var(--danger-border);
     border-radius: 6px;
-    background: #fff5f5;
+    background: var(--danger-bg);
     color: var(--danger);
     font-size: 0.85rem;
 }
@@ -192,7 +261,12 @@ body {
 .chip-conflict {
     border-color: var(--danger);
     color: var(--danger);
-    background: #fff5f5;
+    background: var(--danger-bg);
+}
+
+.chip-colored {
+    background: hsl(var(--hue), var(--seat-s), var(--seat-l));
+    border-color: hsl(var(--hue), var(--seat-border-s), var(--seat-border-l));
 }
 
 /* config */
@@ -250,6 +324,7 @@ body {
 
 .btn {
     display: inline-block;
+    text-decoration: none;
     padding: 8px 16px;
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -278,12 +353,12 @@ body {
 
 .btn-ghost {
     background: transparent;
-    color: var(--green-dark);
+    color: var(--green-strong);
     border-color: var(--green);
 }
 
 .btn-ghost:hover {
-    background: #f0fff4;
+    background: var(--green-tint);
 }
 
 .btn-lg {
@@ -311,7 +386,7 @@ body {
 .stat-value {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--green-dark);
+    color: var(--green-strong);
 }
 
 .stat-warn .stat-value {
@@ -430,6 +505,15 @@ body {
     font-weight: 600;
 }
 
+.seat-colored {
+    background: hsl(var(--hue), var(--seat-s), var(--seat-l));
+    border-color: hsl(var(--hue), var(--seat-border-s), var(--seat-border-l));
+}
+
+.seat-colored .seat-sec {
+    color: hsl(var(--hue), var(--seat-text-s), var(--seat-text-l));
+}
+
 .seat-empty {
     border-style: dashed;
     color: var(--muted);
@@ -458,6 +542,7 @@ body {
     margin: 0 0 8px;
     padding-left: 10px;
     font-size: 1rem;
+    border-left: 5px solid hsl(var(--hue, 0), 60%, 55%);
 }
 
 .section-table {
@@ -477,9 +562,65 @@ body {
     background: var(--bg);
 }
 
+/* help card */
+
+#helpCard details {
+    border-top: 1px solid var(--border);
+    padding: 10px 4px;
+}
+
+#helpCard details:first-of-type {
+    border-top: none;
+}
+
+#helpCard summary {
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+#helpCard p,
+#helpCard ol,
+#helpCard ul {
+    margin: 8px 0 4px;
+    color: var(--text);
+    font-size: 0.9rem;
+    max-width: 780px;
+}
+
+#helpCard li {
+    margin: 4px 0;
+}
+
+#helpCard code {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+}
+
 /* print */
 
 @media print {
+
+    /* always print in light, whatever the on-screen theme */
+    :root,
+    :root[data-theme="dark"] {
+        --bg: #ffffff;
+        --card: #ffffff;
+        --border: #d0d7de;
+        --text: #1f2328;
+        --muted: #59636e;
+        --green-strong: #116329;
+        --danger: #cf222e;
+        --seat-s: 70%;
+        --seat-l: 92%;
+        --seat-border-s: 45%;
+        --seat-border-l: 65%;
+        --seat-text-s: 60%;
+        --seat-text-l: 28%;
+    }
+
     body {
         background: #fff;
     }
@@ -488,6 +629,8 @@ body {
     .site-footer,
     #inputCard,
     #configCard,
+    #helpCard,
+    .lead,
     .toolbar {
         display: none;
     }

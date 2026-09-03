@@ -8,6 +8,7 @@
     <title>Seatwise — exam seating planner</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%91%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="css/style.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) { }</script>
 </head>
 
 <body>
@@ -15,6 +16,7 @@
         <div class="container">
             <a href="./" class="brand">🪑 Seatwise</a>
             <span class="tagline">No two students of the same section sit adjacent — not even diagonally</span>
+            <button type="button" class="theme-toggle" id="themeToggle" title="Switch theme">☀️</button>
         </div>
     </header>
 
@@ -31,6 +33,7 @@
                         <input type="file" id="csvFileInput" accept=".csv,text/csv" hidden>
                     </label>
                     <button type="button" class="btn btn-ghost" id="loadSampleBtn">Try sample data</button>
+                    <a class="btn btn-ghost" href="sample.csv" download>Download sample CSV</a>
                 </div>
                 <p class="hint">Format: <code>Registration No, Section</code> — one student per line (header row optional).</p>
             </div>
@@ -73,11 +76,56 @@
             <div class="legend" id="legend"></div>
             <div id="output"></div>
         </section>
+
+        <section class="card" id="helpCard">
+            <h2>Help &amp; details</h2>
+            <details open>
+                <summary>How to use it</summary>
+                <ol>
+                    <li>Prepare a CSV with two columns — <code>Registration No, Section</code> — or download the
+                        sample above to see the format.</li>
+                    <li>Drop the file on the upload box (or pick it). You'll see a per-section summary, and any
+                        lines that couldn't be read are listed.</li>
+                    <li>Set the room layout — columns per room and seats per column — and choose what should
+                        happen if sections can no longer be kept apart.</li>
+                    <li>Generate, review the colour-coded plan, switch between the Room-wise and Section-wise
+                        views, then download the plan as CSV or print it.</li>
+                </ol>
+            </details>
+            <details>
+                <summary>The seating rule</summary>
+                <p>Every student is guaranteed to have <strong>no classmate from their own section in any of the
+                    8 seats around them</strong> — in front, behind, beside, or diagonal. Rooms fill column by
+                    column (column 1 top to bottom, then column 2, …) and a new room starts automatically when
+                    one is full. The seat picker is greedy: at every seat it takes the eligible section with the
+                    most students remaining, which keeps large sections from clashing at the end.</p>
+            </details>
+            <details>
+                <summary>What do the two strategies mean?</summary>
+                <p>Sometimes every remaining section would clash at the next seat — typically near the end, when
+                    only one section has students left. You choose up front how to handle it:</p>
+                <ul>
+                    <li><strong>Leave empty seats</strong> — gaps are inserted so the no-neighbour guarantee
+                        always holds. Stricter, but uses extra seats (shown dashed, and counted in the stats).</li>
+                    <li><strong>Seat them anyway</strong> — every seat is filled and the clashing pairs are
+                        outlined in red, so invigilators know exactly where to keep an eye.</li>
+                </ul>
+            </details>
+            <details>
+                <summary>Privacy</summary>
+                <p>Everything runs locally in your browser — the CSV is never uploaded anywhere.</p>
+            </details>
+        </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container">
+        <div class="container footer-row">
             <span>Analysis of Algorithms project — Computer Science Dept, UET Lahore</span>
+            <span class="footer-links">
+                <a href="https://github.com/attiqtherehman/seatwise">GitHub</a>
+                <a href="https://github.com/attiqtherehman/seatwise/issues">Report an issue</a>
+                <a href="https://github.com/attiqtherehman">Contact</a>
+            </span>
         </div>
     </footer>
 

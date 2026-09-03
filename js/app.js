@@ -155,11 +155,9 @@
         const box = $("legend");
         box.textContent = "";
         for (const s of state.result.sections) {
-            const hue = state.colors[s.name];
             const chip = document.createElement("span");
-            chip.className = "chip";
-            chip.style.background = "hsl(" + hue + ", 70%, 92%)";
-            chip.style.borderColor = "hsl(" + hue + ", 45%, 65%)";
+            chip.className = "chip chip-colored";
+            chip.style.setProperty("--hue", state.colors[s.name]);
             chip.textContent = "Section " + s.name + " (" + s.count + ")";
             box.appendChild(chip);
         }
@@ -249,16 +247,13 @@
             return cell;
         }
 
-        cell.className = "seat" + (seat.conflict ? " seat-conflict" : "");
-        const hue = state.colors[seat.section];
-        cell.style.background = "hsl(" + hue + ", 70%, 92%)";
-        cell.style.borderColor = "hsl(" + hue + ", 45%, 65%)";
+        cell.className = "seat seat-colored" + (seat.conflict ? " seat-conflict" : "");
+        cell.style.setProperty("--hue", state.colors[seat.section]);
         const roll = document.createElement("span");
         roll.className = "seat-roll";
         roll.textContent = seat.rollNo;
         const sec = document.createElement("span");
         sec.className = "seat-sec";
-        sec.style.color = "hsl(" + hue + ", 60%, 28%)";
         sec.textContent = "Sec " + seat.section + (seat.conflict ? " ⚠" : "");
         cell.appendChild(roll);
         cell.appendChild(sec);
@@ -279,7 +274,7 @@
             block.className = "section-block";
             const title = document.createElement("h3");
             title.textContent = "Section " + section;
-            title.style.borderLeft = "5px solid hsl(" + state.colors[section] + ", 60%, 55%)";
+            title.style.setProperty("--hue", state.colors[section]);
             block.appendChild(title);
 
             const table = document.createElement("table");
@@ -363,6 +358,29 @@
     }
     $("columnsInput").addEventListener("input", updateCapacityNote);
     $("rowsInput").addEventListener("input", updateCapacityNote);
+
+    /* theme: dark by default, toggle persists the choice */
+    const themeToggle = $("themeToggle");
+
+    function currentTheme() {
+        let stored = null;
+        try { stored = localStorage.getItem("theme"); } catch (e) { /* storage unavailable */ }
+        return stored === "light" ? "light" : "dark";
+    }
+
+    function refreshThemeToggle() {
+        const dark = currentTheme() === "dark";
+        themeToggle.textContent = dark ? "☀️" : "🌙";
+        themeToggle.title = dark ? "Switch to light theme" : "Switch to dark theme";
+    }
+
+    themeToggle.addEventListener("click", function () {
+        const next = currentTheme() === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("theme", next); } catch (e) { /* storage unavailable */ }
+        refreshThemeToggle();
+    });
+    refreshThemeToggle();
 
     $("generateBtn").addEventListener("click", generate);
     $("roomTab").addEventListener("click", () => setView("room"));
