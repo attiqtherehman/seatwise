@@ -521,6 +521,12 @@ body {
     justify-content: center;
 }
 
+/* second (blank) line so empty tiles match filled-tile height and rows stay aligned */
+.seat-empty::after {
+    content: "\a0";
+    font-size: 0.72rem;
+}
+
 .seat-conflict {
     outline: 2px solid var(--danger);
     outline-offset: 1px;
@@ -654,7 +660,7 @@ body {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
     .card {
         padding: 16px;
     }
@@ -670,5 +676,39 @@ body {
 
     .toolbar-actions .btn {
         flex: 1;
+    }
+
+    .tagline {
+        display: none;
+    }
+
+    /* compact seat tiles so more columns fit on a phone */
+    .seat {
+        min-width: 92px;
+        padding: 4px 6px 4px 19px;
+        font-size: 0.7rem;
+        border-radius: 5px;
+    }
+
+    .seat-no {
+        left: 4px;
+        font-size: 0.58rem;
+    }
+
+    .seat-sec,
+    .seat-empty::after {
+        font-size: 0.64rem;
+    }
+
+    .room-grid {
+        gap: 6px;
+    }
+
+    .room-col {
+        gap: 4px;
+    }
+
+    .col-head {
+        font-size: 0.64rem;
     }
 }
