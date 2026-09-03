@@ -2,67 +2,84 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Exam seating arrangement generator — seats students so no two from the same section sit adjacent, including diagonals.">
     <title>Seating Arrangement System</title>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%91%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <div class="header">
+    <header class="site-header">
         <div class="container">
-            <div class="header_left">
-                <a href="index.html">
-                    <h2 title="Seating Arrangement System">Seating Arrangement System</h2>
-                </a>
-            </div>
+            <a href="./" class="brand">🪑 Seating Arrangement System</a>
+            <span class="tagline">No two students of the same section sit adjacent — not even diagonally</span>
         </div>
-    </div>
+    </header>
 
-    <div class="add_section">
-        <div class="container">
-            <form class="form-horizontal well">
-                <h4>Input Data Section: </h4>
-                <fieldset style="padding: 18px; border: 1.5px solid green;">
-                    <label for="csvFileInput"> <strong>CSV File:</strong>
+    <main class="container">
+        <section class="card" id="inputCard">
+            <h2><span class="step">1</span> Load students</h2>
+            <div class="dropzone" id="dropzone">
+                <p><strong>Drop a CSV file here</strong> or</p>
+                <div class="dropzone-actions">
+                    <label class="btn btn-primary" for="csvFileInput">Choose CSV file
+                        <input type="file" id="csvFileInput" accept=".csv,text/csv" hidden>
                     </label>
-                    <input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
-                    <p style="font-size: 13px; margin: 1% 0 -1% 0; color: red;"><b>Note: </b>Choose a .csv file only!</p>
-                    <p style="font-size: 13px; margin: 1% 0 -1% 0; color: red;">Registration No. | Sections - with first and second column respectively. </p>
-                </fieldset>
-            </form>
-        </div>
-    </div>
+                    <button type="button" class="btn btn-ghost" id="loadSampleBtn">Try sample data</button>
+                </div>
+                <p class="hint">Format: <code>Registration No, Section</code> — one student per line (header row optional).</p>
+            </div>
+            <div id="parseErrors" class="errors" hidden></div>
+            <div id="inputSummary" hidden></div>
+        </section>
 
-    <div class="generate_section" id="outputButton" style="font-size: 12px;">
-        <hr>
+        <section class="card" id="configCard" hidden>
+            <h2><span class="step">2</span> Configure rooms</h2>
+            <div class="config-grid">
+                <label>Columns per room
+                    <input type="number" id="columnsInput" min="1" max="20" value="5">
+                </label>
+                <label>Seats per column
+                    <input type="number" id="rowsInput" min="1" max="50" value="10">
+                </label>
+                <div class="capacity-note" id="capacityNote">Room capacity: 50 seats</div>
+            </div>
+            <fieldset class="strategy">
+                <legend>If sections can no longer be kept apart</legend>
+                <label><input type="radio" name="strategy" value="spaces" checked> Leave empty seats between them</label>
+                <label><input type="radio" name="strategy" value="as-is"> Seat them anyway (conflicts highlighted)</label>
+            </fieldset>
+            <button type="button" class="btn btn-primary btn-lg" id="generateBtn">Generate seating plan</button>
+        </section>
+
+        <section class="card" id="resultsCard" hidden>
+            <h2><span class="step">3</span> Seating plan</h2>
+            <div class="stats" id="statsRow"></div>
+            <div class="toolbar">
+                <div class="tabs" role="tablist">
+                    <button type="button" class="tab active" role="tab" aria-selected="true" id="roomTab">Room-wise</button>
+                    <button type="button" class="tab" role="tab" aria-selected="false" id="sectionTab">Section-wise</button>
+                </div>
+                <div class="toolbar-actions">
+                    <button type="button" class="btn" id="downloadBtn">Download CSV</button>
+                    <button type="button" class="btn" id="printBtn">Print</button>
+                </div>
+            </div>
+            <div class="legend" id="legend"></div>
+            <div id="output"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
         <div class="container">
-            <div id="inputDisplay">
-            </div>
-            <div id="outputDisplay">
-            </div>
-            <div id="btn">
-                <br>
-                <button style="padding: 7px 30px; width: 15%;" id="generate" onclick="generateList()">Generate List</button><br><br>
-                <button id="View" onclick="roomWise()">View Room-Wise</button>
-                <button id="View" onclick="sectionWise()">View Section-Wise</button>
-                <button id="download" onclick="exportTableToCSV('csvFile.csv')"> Download</button>
-                <button id="print" onclick="print()"> Print</button>
-                <table id="outputTable">
-                </table>
-            </div> <br> <br>
+            <span>Analysis of Algorithms project — Computer Science Dept, UET Lahore</span>
         </div>
-    </div>
+    </footer>
 
-    <div class="footer" id="foot">
-        <div class="container">
-            <div class="footer_left">
-                <span id="p1">Analysis of Algorithms Project</span>
-                <span">Computer Science Dept, UET Lahore</span>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript" src="SeatingArrangementAlgo.js"></script>
-
+    <script src="js/algorithm.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>
