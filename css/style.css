@@ -66,6 +66,13 @@ body {
     font-size: 0.85rem;
 }
 
+.lead {
+    margin: 22px 4px 0;
+    color: var(--muted);
+    font-size: 1.02rem;
+    max-width: 720px;
+}
+
 /* cards */
 
 .card {

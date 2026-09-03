@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Exam seating arrangement generator — seats students so no two from the same section sit adjacent, including diagonals.">
-    <title>Seating Arrangement System</title>
+    <meta name="description" content="Seatwise — exam seating planner. Generates seating plans where no two students of the same section sit adjacent, including diagonals.">
+    <title>Seatwise — exam seating planner</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%91%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -13,12 +13,15 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="./" class="brand">🪑 Seating Arrangement System</a>
+            <a href="./" class="brand">🪑 Seatwise</a>
             <span class="tagline">No two students of the same section sit adjacent — not even diagonally</span>
         </div>
     </header>
 
     <main class="container">
+        <p class="lead">Upload a list of students and their sections — get a room-by-room exam seating plan where
+            no two classmates sit next to each other, ready to print or export.</p>
+
         <section class="card" id="inputCard">
             <h2><span class="step">1</span> Load students</h2>
             <div class="dropzone" id="dropzone">

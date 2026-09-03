@@ -1,14 +1,16 @@
-# 🪑 Seating Arrangement System
+# 🪑 Seatwise
 
-Generate exam seating plans from a CSV of students — with the guarantee that **no two students of the same section sit next to each other**: not front-back, not left-right, and not diagonally.
+**Seatwise** generates exam-hall seating plans from a CSV of students — with the guarantee that **no two students of the same section sit next to each other**: not front-back, not left-right, and not diagonally.
 
 Zero dependencies, no build step: open `index.html` in a browser and it works.
 
-> Originally built in 2019 as an *Analysis of Algorithms* project at the Computer Science Department, **UET Lahore**. Modernized in 2026.
+> Originally built in 2019 as *Seating Arrangement System*, an *Analysis of Algorithms* project at the Computer Science Department, **UET Lahore**. Modernized and renamed in 2026.
 
-**Live demo:** https://attiqtherehman.github.io/seatingArrangementSystem/
+**Live demo:** https://attiqtherehman.github.io/seatwise/
 
-The original 2019 version is preserved on the [`old-version`](https://github.com/attiqtherehman/seatingArrangementSystem/tree/old-version) branch (tag `v1.0`).
+![Room-wise seating grid with colour-coded sections](docs/screenshot.png)
+
+The original 2019 version is preserved on the [`old-version`](https://github.com/attiqtherehman/seatwise/tree/old-version) branch (tag `v1.0`).
 
 ## Features
 
